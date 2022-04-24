@@ -94,6 +94,8 @@ class Interventions extends Component
             'int_par_id' => $this->int_par_id,
             'int_nb_jrs' => $this->int_nb_jrs
         ]);
+        session()->flash('message', 'Users Updated Successfully.');
+        $this->resetInputFields();
     }
     public function delete($id)
     {

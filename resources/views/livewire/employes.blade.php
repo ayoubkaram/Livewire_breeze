@@ -4,6 +4,7 @@
             {{ __('Employes') }}
         </h2>
     </x-slot>
+    <br>
     @if(Auth::user()->hasRole('admin'))
         @if($updateMode)
             @include('livewire.employes.update')
@@ -17,6 +18,7 @@
     @endif
 
 
+    <br>
     <table class="table table-bordered mt-5" id="sampleTable">
         <thead>
         <tr>
@@ -37,12 +39,12 @@
                 <td>{{ $value->emp_prn }}</td>
                 <td>{{ $value->emp_tarif }}</td>
                 @if(Auth::user()->hasRole('editor|admin'))
-                    <td>
-                        <button wire:click="edit({{ json_encode($value->emp_nss) }})"
-                                class="btn btn-primary btn-sm">Edit</button>
+                    <td class="px-6 py-4 text-sm text-center text-gray-500">
+                        <x-button wire:click="edit({{ json_encode($value->emp_nss) }})">Edit
+                        </x-button>
                         @if(Auth::user()->hasRole('admin'))
-                            <button wire:click="delete({{ json_encode($value->emp_nss) }})"
-                                    class="btn btn-danger btn-sm">Delete</button>
+                            <x-button wire:click="delete({{ json_encode($value->emp_nss) }})"
+                                      class="text-sm text-gray bg-red-400 rounded">Delete</x-button>
                         @endif
                     </td>
                 @endif

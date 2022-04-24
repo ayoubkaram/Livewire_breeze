@@ -1,10 +1,4 @@
-<x-auth-card>
-    <x-slot name="logo">
-        <a href="/">
-            <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-        </a>
-    </x-slot>
-    <form>
+ <form>
         <div>
             <x-label for="tarif" class="block mt-3 mb-1 font-medium text-sm text-gray-700">Employe Tarif</x-label>
             <select name="tarif" id="tarif" style="width: 100%;" wire:model="int_emp_nss"
@@ -43,4 +37,3 @@
         <x-button wire:click.prevent="update()" class="mt-4">Update</x-button>
         <x-button wire:click.prevent="cancel()" class="mt-4 text-sm text-gray bg-red-400 rounded">Cancel</x-button>
     </form>
-</x-auth-card>

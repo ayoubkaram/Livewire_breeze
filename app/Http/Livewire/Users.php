@@ -2,83 +2,102 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 use App\Models\User;
 
 class Users extends Component
 {
-    public $users, $name, $email, $user_id;
-    public $updateMode = false;
-
+    public $isOpen = 0;
+    public $user, $idu, $name, $role, $email, $password;
     public function render()
     {
-        $this->users = User::all();
+        $this->user = User::all();
         return view('livewire.users');
     }
+    public function create()
+    {
+        $this->resetInputFields();
+        $this->openModal();
+    }
 
-    private function resetInputFields(){
+    public function openModal()
+    {
+        $this->isOpen = true;
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+    }
+
+    public function cancel()
+    {
+        $this->resetInputFields();
+    }
+
+    private function resetInputFields()
+    {
+        $this->password = '';
         $this->name = '';
+        $this->role = '';
         $this->email = '';
     }
 
     public function store()
     {
-        $validatedDate = $this->validate([
+        $this->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'role' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
-        User::create($validatedDate);
 
-        session()->flash('message', 'Users Created Successfully.');
+        $user = User::updateOrCreate(['name' => $this->name, 'email' => $this->email, 'password' => Hash::make($this->password)]);
+        $user->attachRole($this->role);
+        session()->flash(
+            'message',
+            $this->idu ? 'Agr Updated Successfully.' : 'Agr Created Successfully.'
+        );
 
+        $this->closeModal();
         $this->resetInputFields();
-
     }
 
     public function edit($id)
     {
-        $this->updateMode = true;
-        $user = User::where('id',$id)->first();
-        $this->user_id = $id;
-        $this->name = $user->name;
-        $this->email = $user->email;
+        $Agri = User::findOrFail($id);
+        $this->idu = $id;
+        $this->role = $Agri->role;
+        $this->name = $Agri->name;
+        $this->email = $Agri->email;
+        $this->password = "";
 
-    }
-
-    public function cancel()
-    {
-        $this->updateMode = false;
-        $this->resetInputFields();
-
-
+        $this->openModal();
     }
 
     public function update()
     {
-        $validatedDate = $this->validate([
+        $this->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'role' => 'required',
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
-        if ($this->user_id) {
-            $user = User::find($this->user_id);
-            $user->update([
-                'name' => $this->name,
-                'email' => $this->email,
-            ]);
-            $this->updateMode = false;
-            session()->flash('message', 'Users Updated Successfully.');
-            $this->resetInputFields();
-
-        }
+        User::find($this->idu)->update([
+            'name' => $this->name,
+            'role' => $this->role,
+            'email' => $this->email,
+            'password' => $this->password,
+        ]);
     }
-
     public function delete($id)
     {
-        if($id){
-            User::where('id',$id)->delete();
-            session()->flash('message', 'Users Deleted Successfully.');
+        if ($id) {
+            User::find($id)->delete();
+            session()->flash('message', 'Post Deleted Successfully.');
         }
     }
 }

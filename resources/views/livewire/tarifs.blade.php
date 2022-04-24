@@ -1,3 +1,5 @@
+
+
 <div>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -16,7 +18,7 @@
         @endif
     @endif
 
-
+    <br>
     <table class="table table-bordered mt-5" id="sampleTable">
         <thead>
         <tr>
@@ -33,12 +35,12 @@
                 <td>{{ $value->tar_description }}</td>
                 <td>{{ $value->tar_ero }}</td>
                 @if(Auth::user()->hasRole('editor|admin'))
-                    <td>
-                        <button wire:click="edit({{ json_encode($value->tar_description) }})"
-                                class="btn btn-primary btn-sm">Edit</button>
+                    <td class="px-6 py-4 text-sm text-center text-gray-500">
+                        <x-button wire:click="edit({{ json_encode($value->tar_description) }})">Edit
+                        </x-button>
                         @if(Auth::user()->hasRole('admin'))
-                            <button wire:click="delete({{ json_encode($value->tar_description)}})"
-                                    class="btn btn-danger btn-sm">Delete</button>
+                            <x-button wire:click="delete({{ json_encode($value->tar_description) }})"
+                                      class="text-sm text-gray bg-red-400 rounded">Delete</x-button>
                         @endif
                     </td>
                 @endif

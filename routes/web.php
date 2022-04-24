@@ -6,6 +6,8 @@ use App\Http\Livewire\Tarifs;
 use App\Http\Livewire\Employes;
 use App\Http\Livewire\Parcelles;
 use App\Http\Livewire\Interventions;
+use App\Http\Livewire\Users;
+use App\Http\Livewire\Data;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,11 +30,11 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
 // for admin
-/*Route::group(['middleware' => ['auth', 'role:admin']], function() {
-   // Route::get('/dashboard/agriculteur', 'App\Http\Controllers\DashboardController@agriculteur')->name('agriculteurs');
-    Route::get('/dashboard/agriculteur', Agriculteurs::class)->name('agriculteurs');
+Route::group(['middleware' => ['auth', 'role:admin']], function() {
+    Route::get('/admin/users', Users::class)->name('users');
 });
 
+/*
 // for editor
 Route::group(['middleware' => ['auth', 'role:editor']], function() {
     Route::get('/dashboard/postcreate', Agriculteurs::class)->name('agriculteurs');
@@ -45,6 +47,7 @@ Route::group(['middleware' => ['auth', 'role:admin|editor|user']], function() {
     Route::get('/dashboard/employes', Employes::class)->name('employes');
     Route::get('/dashboard/parcelles', Parcelles::class)->name('parcelles');
     Route::get('/dashboard/interventions', Interventions::class)->name('interventions');
+    Route::get('/data', Data::class)->name('data');
 });
 
 Route::view('users','livewire.home');
