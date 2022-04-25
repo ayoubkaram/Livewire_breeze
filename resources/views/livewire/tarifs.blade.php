@@ -1,22 +1,18 @@
-
-
+{{-- @include('layouts.navigation') --}}
 <div>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Tarifs') }}
         </h2>
     </x-slot>
-    @if(Auth::user()->hasRole('admin'))
-        @if($updateMode)
-            @include('livewire.tarifs.update')
-        @else
-            @include('livewire.tarifs.create')
+    <br>
+    @if(Auth::user()->hasRole('admin|editor'))
+            @if ($isOpen)
+                @include('livewire.tarifs.update')
+            @else
+                @include('livewire.tarifs.create')
+            @endif
         @endif
-    @else
-        @if($updateMode)
-            @include('livewire.tarifs.update')
-        @endif
-    @endif
 
     <br>
     <table class="table table-bordered mt-5" id="sampleTable">
@@ -30,7 +26,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($tarifs as $value)
+        @foreach($tarif as $value)
             <tr>
                 <td>{{ $value->tar_description }}</td>
                 <td>{{ $value->tar_ero }}</td>
@@ -48,6 +44,8 @@
         @endforeach
         </tbody>
     </table>
+
+
 
 
     <script>

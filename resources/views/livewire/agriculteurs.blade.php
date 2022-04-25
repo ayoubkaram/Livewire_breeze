@@ -1,11 +1,9 @@
-
  <div>
      <x-slot name="header">
          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-             {{ __('Agriculteurs') }}
+             {{ __('Argi') }}
          </h2>
      </x-slot>
-     <br>
      @if(Auth::user()->hasRole('admin'))
          @if($updateMode)
              @include('livewire.agriculteurs.update')
@@ -17,6 +15,7 @@
              @include('livewire.agriculteurs.update')
          @endif
      @endif
+
      <br>
      <table class="table table-bordered mt-5" id="sampleTable">
          <thead>
@@ -52,6 +51,7 @@
      </table>
 
 
+
      <script>
          $(document).ready(function() {
              $('#sampleTable').DataTable({
@@ -59,7 +59,8 @@
              });
          });
      </script>
- </div>
+    </div>
+
 
 
 

@@ -6,13 +6,13 @@
     </x-slot>
     <br>
     @if(Auth::user()->hasRole('admin'))
-        @if($updateMode)
+        @if($isOpen)
             @include('livewire.employes.update')
         @else
             @include('livewire.employes.create')
         @endif
     @else
-        @if($updateMode)
+        @if($isOpen)
             @include('livewire.employes.update')
         @endif
     @endif
@@ -32,7 +32,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach($emps as $value)
+        @foreach($employe as $value)
             <tr>
                 <td>{{ $value->emp_nss }}</td>
                 <td>{{ $value->emp_nom }}</td>

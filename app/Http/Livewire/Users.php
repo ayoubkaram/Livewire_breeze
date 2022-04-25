@@ -92,12 +92,15 @@ class Users extends Component
             'email' => $this->email,
             'password' => $this->password,
         ]);
+        session()->flash('message', 'User updated Successfully.');
+        $this->closeModal();
+        $this->resetInputFields();
     }
     public function delete($id)
     {
         if ($id) {
             User::find($id)->delete();
-            session()->flash('message', 'Post Deleted Successfully.');
+            session()->flash('message', 'User Deleted Successfully.');
         }
     }
 }

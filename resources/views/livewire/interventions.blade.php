@@ -6,17 +6,13 @@
             {{ __('Interventions') }}
         </h2>
     </x-slot>
-    @if(Auth::user()->hasRole('admin'))
+
         @if($isOpen)
             @include('livewire.intervention.update')
         @else
             @include('livewire.intervention.create')
         @endif
-    @else
-        @if($isOpen)
-            @include('livewire.intervention.update')
-        @endif
-    @endif
+
 
 
     <table class="table table-bordered mt-5" id="sampleTable">
@@ -41,7 +37,7 @@
                 </td>
                 @if(Auth::user()->hasRole('editor|admin'))
                     <td class="px-6 py-4 text-sm text-center text-gray-500">
-                        {{-- <dd>{{ $value->int_debut }}</dd> --}}
+
                         <x-button wire:click="edit({{ json_encode($value->int_debut) }})">Edit
                         </x-button>
                         @if(Auth::user()->hasRole('admin'))

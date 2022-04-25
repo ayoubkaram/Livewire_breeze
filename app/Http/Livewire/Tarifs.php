@@ -7,75 +7,87 @@ use Livewire\Component;
 
 class Tarifs extends Component
 {
-    public $tarifs, $tar_ero, $tar_description;
-    public $updateMode = false;
-
+    public $isOpen = 0;
+    public $tarif, $tar_description, $tar_ero, $type;
     public function render()
     {
-        $this->tarifs =Tarif::all();
+        $this->tarif = Tarif::all();
         return view('livewire.tarifs');
     }
-
-    private function resetInputFields(){
-        $this->tar_description = '';
-        $this->tar_ero = '';
-    }
-
-    public function store()
+    public function create()
     {
-        $validatedDate = $this->validate([
-            'tar_description' => 'required',
-            'tar_ero' => 'required',
-        ]);
-
-        Tarif::create($validatedDate);
-
-        session()->flash('message', 'Tarif Created Successfully.');
-
         $this->resetInputFields();
-
+        $this->openModal();
     }
 
-    public function edit($id)
+    public function openModal()
     {
-        $this->updateMode = true;
-        $tar = Tarif::find($id)->first();
-        $this->tar_ero = $tar->tar_ero;
+        $this->isOpen = true;
+    }
 
+    public function closeModal()
+    {
+        $this->isOpen = false;
     }
 
     public function cancel()
     {
-        $this->updateMode = false;
-        $this->resetInputFields();
-
-
+        $this->tar_description = '';
+        $this->tar_ero = '';
     }
 
-    public function update()
+    private function resetInputFields()
     {
-        $validatedDate = $this->validate([
+        $this->tar_description = '';
+        $this->tar_ero = '';
+    }
+    public function store()
+    {
+        $this->validate([
             'tar_description' => 'required',
             'tar_ero' => 'required',
         ]);
 
-        if ($this->tar_description) {
-            $tar = Tarif::find($this->tar_description);
-            $tar->update([
-                'tar_ero' => $this->tar_ero,
-            ]);
-            $this->updateMode = false;
-            session()->flash('message', 'Tarif Updated Successfully.');
-            $this->resetInputFields();
+        Tarif::updateOrCreate(['tar_description' => $this->tar_description, 'tar_ero' => $this->tar_ero]);
+        session()->flash(
+            'message',
+            $this->tar_description ? 'tarif Updated Successfully.' : 'tarif Created Successfully.'
+        );
 
-        }
+        $this->closeModal();
+        $this->resetInputFields();
+    }
+    public function edit($id)
+    {
+        $Tarif  = Tarif::findOrFail((string)$id);
+        $this->tar_description = $id;
+        $this->tar_ero = $Tarif->tar_ero;
+
+        $this->openModal();
     }
 
+    public function update()
+    {
+        $this->validate([
+            'tar_description' => 'required',
+            'tar_ero' => 'required'
+        ]);
+
+        Tarif::find($this->tar_description)->update([
+            'tar_description' => $this->tar_description,
+            'tar_ero' => $this->tar_ero
+        ]);
+        session()->flash('message', 'Tarif Updated Successfully.');
+        $this->closeModal();
+        $this->resetInputFields();
+    }
     public function delete($id)
     {
-        if($id){
+
+        if ($id) {
+            // $this->type = gettype($id);
             Tarif::find($id)->delete();
-            session()->flash('message', 'Tarif Deleted Successfully.');
+            session()->flash('message', 'tarif Deleted Successfully.');
         }
     }
 }

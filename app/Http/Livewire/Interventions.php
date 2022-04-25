@@ -40,6 +40,8 @@ class Interventions extends Component
         $this->int_emp_nss = '';
         $this->int_par_id = '';
         $this->int_nb_jrs = '';
+
+        $this->closeModal();
     }
 
     private function resetInputFields()
@@ -95,6 +97,7 @@ class Interventions extends Component
             'int_nb_jrs' => $this->int_nb_jrs
         ]);
         session()->flash('message', 'Users Updated Successfully.');
+        $this->closeModal();
         $this->resetInputFields();
     }
     public function delete($id)
