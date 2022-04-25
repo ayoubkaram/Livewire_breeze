@@ -1,20 +1,27 @@
-<form>
-    <div class="form-group">
-        <input type="hidden" wire:model="id">
-        <label for="exampleFormControlInput1">Agriculteur nom</label>
-        <input type="text" class="form-control" wire:model="agr_nom" id="exampleFormControlInput1" placeholder="Enter Name">
-        @error('agr_nom') <span class="text-danger">{{ $message }}</span>@enderror
-    </div>
-    <div class="form-group">
-        <label for="exampleFormControlInput2">Agriculteur prenom</label>
-        <input type="text" class="form-control" wire:model="agr_prn" id="exampleFormControlInput2" placeholder="Enter prenom">
-        @error('agr_prn') <span class="text-danger">{{ $message }}</span>@enderror
-    </div>
-    <div class="form-group">
-        <label for="exampleFormControlInput2">Agriculteur Resid</label>
-        <input type="text" class="form-control" id="exampleFormControlInput2" wire:model="agr_resid" placeholder="Enter Resid">
-        @error('agr_resid') <span class="text-danger">{{ $message }}</span>@enderror
-    </div>
-    <button wire:click.prevent="update()" class="btn btn-dark">Update</button>
-    <button wire:click.prevent="cancel()" class="btn btn-danger">Cancel</button>
-</form>
+
+    <form>
+        <div>
+            <x-label for="exampleFormControlInput1">Agriculteur nom</x-label>
+            <x-input class="mt-1 w-full" type="text" id="exampleFormControlInput1" wire:model="agr_nom" />
+            @error('agr_nom')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <x-label for="exampleFormControlInput2">Agriculteur prenom </x-label>
+            <x-input class="mt-1 w-full" type="text" id="exampleFormControlInput2" wire:model="agr_prn" />
+            @error('agr_prn')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <div>
+            <x-label for="exampleFormControlInput3">Agriculteur Residance</x-label>
+            <x-input class="mt-1 w-full" type="text" id="exampleFormControlInput3" wire:model="agr_resid" />
+            @error('agr_resid')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <x-button wire:click.prevent="update()" class="mt-4">Update</x-button>
+        <x-button wire:click.prevent="cancel()" class="mt-4 text-sm text-gray bg-red-400 rounded">Cancel</x-button>
+    </form>
+

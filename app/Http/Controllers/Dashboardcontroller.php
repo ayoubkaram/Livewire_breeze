@@ -19,8 +19,4 @@ class Dashboardcontroller extends Controller
         }
     }
 
-    public function agriculteur()
-    {
-        return view('agriculteursdash');
-    }
 }

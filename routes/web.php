@@ -34,13 +34,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function() {
     Route::get('/admin/users', Users::class)->name('users');
 });
 
-/*
-// for editor
-Route::group(['middleware' => ['auth', 'role:editor']], function() {
-    Route::get('/dashboard/postcreate', Agriculteurs::class)->name('agriculteurs');
-});
-*/
-
 Route::group(['middleware' => ['auth', 'role:admin|editor|user']], function() {
     Route::get('/dashboard/agriculteurs', Agriculteurs::class)->name('agriculteurs');
     Route::get('/dashboard/tarifs', Tarifs::class)->name('tarifs');

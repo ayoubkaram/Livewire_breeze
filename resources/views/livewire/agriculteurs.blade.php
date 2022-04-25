@@ -2,7 +2,7 @@
  <div>
      <x-slot name="header">
          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-             {{ __('Argi') }}
+             {{ __('Agriculteurs') }}
          </h2>
      </x-slot>
      <br>
@@ -39,8 +39,7 @@
                  <td>{{ $value->agr_resid }}</td>
                  @if(Auth::user()->hasRole('editor|admin'))
                      <td class="px-6 py-4 text-sm text-center text-gray-500">
-                         <x-button wire:click="edit({{ ($value->id) }})">Edit
-                         </x-button>
+                         <x-button wire:click="edit({{ ($value->id) }})">Edit</x-button>
                          @if(Auth::user()->hasRole('admin'))
                              <x-button wire:click="delete({{ ($value->id) }})"
                                        class="text-sm text-gray bg-red-400 rounded">Delete</x-button>

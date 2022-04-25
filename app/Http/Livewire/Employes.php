@@ -46,7 +46,7 @@ class Employes extends Component
     public function edit($id)
     {
         $this->updateMode = true;
-        $Emp = Employe::where('emp_nss',$id)->first();;
+        $Emp = Employe::findOrFail($id);
         $this->emp_nss = $id;
         $this->emp_nom = $Emp->emp_nom;
         $this->emp_prn = $Emp->emp_prn;
@@ -63,27 +63,24 @@ class Employes extends Component
 
     }
 
+
     public function update()
     {
-        $validatedDate = $this->validate([
+        $this->validate([
             'emp_nss' => 'required',
             'emp_nom' => 'required',
             'emp_prn' => 'required',
             'emp_tarif' => 'required'
         ]);
 
-        if ($this->emp_nss) {
-            $emp = Employe::find($this->emp_nss);
-            $emp->update([
-                'emp_nom' => $this->emp_nom,
-                'emp_prn' => $this->emp_prn,
-                'emp_tarif' => $this->emp_tarif
-            ]);
-            $this->updateMode = false;
-            session()->flash('message', 'Employe Updated Successfully.');
-            $this->resetInputFields();
-
-        }
+        Employe::find($this->emp_nss)->update([
+            'emp_nom' => $this->emp_nom,
+            'emp_prn' => $this->emp_prn,
+            'emp_tarif' => $this->emp_tarif
+        ]);
+        $this->updateMode = false;
+        session()->flash('message', 'Employe Updated Successfully.');
+        $this->resetInputFields();
     }
 
     public function delete($id)

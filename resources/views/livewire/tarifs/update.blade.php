@@ -1,13 +1,14 @@
 <form>
-    <div class="form-group">
-        <input type="hidden" wire:model="tar_description">
-        <label for="exampleFormControlInput1">Tarif ero</label>
-        <input type="tar_ero" class="form-control" wire:model="tar_ero" id="exampleFormControlInput1">
+    <div>
+        <x-label for="exampleFormControlx-input2">Tarif ero</x-label>
+        <x-input class="mt-1 w-full" type="text" id="exampleFormControlx-input2" wire:model="tar_ero" />
         @error('tar_ero')
-        <span class="text-danger">{{ $message }}</span>
+        <span class="text-rose-700">{{ $message }}</span>
         @enderror
     </div>
-
-    <button wire:click.prevent="update()" class="btn btn-dark">Update</button>
-    <button wire:click.prevent="cancel()" class="btn btn-danger">Cancel</button>
+    <x-button wire:click.prevent="update()" class="mt-4">Update</x-button>
+    <x-button wire:click.prevent="cancel()" class="mt-4 text-sm text-gray bg-red-400 rounded">Cancel</x-button>
 </form>
+
+
+

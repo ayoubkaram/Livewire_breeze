@@ -36,12 +36,10 @@ class Tarifs extends Component
 
     }
 
-
-
     public function edit($id)
     {
         $this->updateMode = true;
-        $tar = Tarif::where('tar_description',$id)->first();
+        $tar = Tarif::find($id)->first();
         $this->tar_ero = $tar->tar_ero;
 
     }
@@ -64,7 +62,6 @@ class Tarifs extends Component
         if ($this->tar_description) {
             $tar = Tarif::find($this->tar_description);
             $tar->update([
-                'tar_description' => $this->tar_description,
                 'tar_ero' => $this->tar_ero,
             ]);
             $this->updateMode = false;
