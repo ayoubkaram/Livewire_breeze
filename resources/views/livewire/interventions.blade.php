@@ -6,12 +6,17 @@
             {{ __('Interventions') }}
         </h2>
     </x-slot>
-
+    @if(Auth::user()->hasRole('admin'))
         @if($isOpen)
             @include('livewire.intervention.update')
         @else
             @include('livewire.intervention.create')
         @endif
+    @elseif(Auth::user()->hasRole('editor'))
+        @if($isOpen)
+            @include('livewire.intervention.update')
+        @endif
+    @endif
 
 
 

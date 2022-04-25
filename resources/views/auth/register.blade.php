@@ -26,6 +26,17 @@
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
             </div>
 
+                <!-- TYpe -->
+                <div>
+                    <label for="role" class="block mt-3 mb-1 font-medium text-sm text-gray-700">Type</label>
+                    <select name="role" id="role" style="width: 100%;"
+                            class="block rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            required>
+                        <option value=""> </option>
+                        <option value="user"> User </option>
+                    </select>
+                </div>
+
             <!-- Password -->
             <div class="mt-4">
                 <x-label for="password" :value="__('Password')" />

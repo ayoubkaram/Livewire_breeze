@@ -4,13 +4,14 @@
              {{ __('Argi') }}
          </h2>
      </x-slot>
+     <br>
      @if(Auth::user()->hasRole('admin'))
          @if($updateMode)
              @include('livewire.agriculteurs.update')
          @else
              @include('livewire.agriculteurs.create')
          @endif
-     @else
+     @elseif(Auth::user()->hasRole('editor'))
          @if($updateMode)
              @include('livewire.agriculteurs.update')
          @endif

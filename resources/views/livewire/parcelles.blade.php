@@ -5,13 +5,17 @@
         </h2>
     </x-slot>
     <br>
-    @if(Auth::user()->hasRole('editor|admin'))
-            @if ($isOpen)
-                @include('livewire.parcelle.update')
-            @else
-                @include('livewire.parcelle.create')
-            @endif
+    @if(Auth::user()->hasRole('admin'))
+    @if($isOpen)
+        @include('livewire.parcelle.update')
+    @else
+        @include('livewire.parcelle.create')
+    @endif
+    @elseif(Auth::user()->hasRole('editor'))
+        @if($isOpen)
+            @include('livewire.parcelle.update')
         @endif
+    @endif
 
     <br>
     <table class="table table-bordered mt-5" id="sampleTable">

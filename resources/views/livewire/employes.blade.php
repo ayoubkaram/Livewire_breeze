@@ -11,7 +11,7 @@
         @else
             @include('livewire.employes.create')
         @endif
-    @else
+    @elseif(Auth::user()->hasRole('editor'))
         @if($isOpen)
             @include('livewire.employes.update')
         @endif

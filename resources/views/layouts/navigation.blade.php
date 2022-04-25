@@ -30,7 +30,7 @@
                     <x-nav-link :href="route('interventions')" :active="request()->routeIs('interventions')">
                         {{ __('Intervention') }}
                     </x-nav-link>
-                    @if(Auth::user()->hasRole('admin|editor'))
+                    @if(Auth::user()->hasRole('admin'))
                         <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
                             {{ __('Users') }}
                         </x-nav-link>

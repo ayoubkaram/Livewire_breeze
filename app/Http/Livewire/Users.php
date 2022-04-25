@@ -8,8 +8,9 @@ use App\Models\User;
 
 class Users extends Component
 {
+
     public $isOpen = 0;
-    public $user, $idu, $name, $role, $email, $password;
+    public $user, $idu, $name, $role, $email, $password, $oldRole;
     public function render()
     {
         $this->user = User::all();
@@ -53,8 +54,7 @@ class Users extends Component
             'password' => 'required',
         ]);
 
-
-        $user = User::updateOrCreate(['name' => $this->name, 'email' => $this->email, 'password' => Hash::make($this->password)]);
+        $user = User::updateOrCreate(['name' => $this->name, 'role' => $this->role, 'email' => $this->email, 'password' => Hash::make($this->password)]);
         $user->attachRole($this->role);
         session()->flash(
             'message',
@@ -72,6 +72,7 @@ class Users extends Component
         $this->role = $Agri->role;
         $this->name = $Agri->name;
         $this->email = $Agri->email;
+        $this->oldRole = $Agri->role;
         $this->password = "";
 
         $this->openModal();
@@ -86,21 +87,26 @@ class Users extends Component
             'password' => 'required',
         ]);
 
-        User::find($this->idu)->update([
+        $user = User::findOrFail($this->idu);
+        $user->update([
             'name' => $this->name,
             'role' => $this->role,
             'email' => $this->email,
-            'password' => $this->password,
+            'password' => Hash::make($this->password),
         ]);
+        $user->detachRole($this->oldRole);
+        $user->attachRole($this->role);
         session()->flash('message', 'User updated Successfully.');
         $this->closeModal();
         $this->resetInputFields();
+
     }
     public function delete($id)
     {
         if ($id) {
             User::find($id)->delete();
-            session()->flash('message', 'User Deleted Successfully.');
+            session()->flash('message', 'Post Deleted Successfully.');
         }
     }
 }
+

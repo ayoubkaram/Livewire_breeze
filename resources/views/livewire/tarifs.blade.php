@@ -6,13 +6,17 @@
         </h2>
     </x-slot>
     <br>
-    @if(Auth::user()->hasRole('admin|editor'))
-            @if ($isOpen)
-                @include('livewire.tarifs.update')
-            @else
-                @include('livewire.tarifs.create')
-            @endif
+    @if(Auth::user()->hasRole('admin'))
+        @if($isOpen)
+            @include('livewire.tarifs.update')
+        @else
+            @include('livewire.tarifs.create')
         @endif
+    @elseif(Auth::user()->hasRole('editor'))
+        @if($isOpen)
+            @include('livewire.tarifs.update')
+        @endif
+    @endif
 
     <br>
     <table class="table table-bordered mt-5" id="sampleTable">
